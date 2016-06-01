@@ -1,0 +1,23 @@
+---
+- name: ensure apt-get update has been run
+  apt: update_cache=yes
+- name: install base pkgs
+  apt: pkg={{ item }} state=latest install_recommends=no
+  with_items:
+    - sudo
+    - rsync
+    - build-essential
+    - git
+- name: configure sudoers
+  lineinfile: dest=/etc/sudoers backup=yes state=present regexp='^%wheel' insertafter="^%sudo" line='%wheel ALL=(ALL) NOPASSWD:ALL'
+- name: ensure wheel group is present
+  action: group name=wheel state=present
+- name: ensure users are present
+  action: user state=present shell=/bin/bash groups=wheel,www-data name={{ item }}
+  with_items:
+    - abezuska
+    - elathrop
+- name: put authorized key for alex in place
+  action: authorized_key user=abezuska key=https://github.com/alexbezuska.keys
+- name: put authorized key for eric in place
+  action: authorized_key user=elathrop key=https://github.com/ericlathrop.keys
