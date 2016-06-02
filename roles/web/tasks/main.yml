@@ -2,11 +2,10 @@
 - name: install apache/mysql
   apt: pkg={{ item }} state=latest install_recommends=no
   with_items:
+    - apache2
     - mysql-server
-    - php5
-    - libapache2-mod-php5
-    - libapache2-mod-auth-mysql
-    - php5-mysql
+    - libapache2-mod-php7.0
+    - php7.0-mysql
   notify:
   - Start Apache
   register: apacheinstalled
