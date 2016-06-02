@@ -10,5 +10,6 @@
     - common
     - web
     - louisvillemakesgames.org
+    - gamedevlou.org
   remote_user: root
   vars: []

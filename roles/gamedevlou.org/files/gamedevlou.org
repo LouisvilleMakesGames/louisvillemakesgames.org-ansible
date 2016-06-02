@@ -1,0 +1,5 @@
+<VirtualHost *:80>
+    DocumentRoot /var/www/gamedevlou.org
+    ServerAlias gamedevlou.org
+    ServerAlias www.gamedevlou.org
+</VirtualHost>

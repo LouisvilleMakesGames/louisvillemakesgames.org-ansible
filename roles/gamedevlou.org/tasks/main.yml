@@ -1,0 +1,15 @@
+---
+- name: Create Web Root
+  when: apacheinstalled|success
+  file: dest=/var/www/gamedevlou.org mode=2775 state=directory owner=www-data group=www-data
+  notify:
+  - Reload Apache
+- name: Add gamedevlou.org config
+  when: apacheinstalled|success
+  register: apacheconfig
+  copy: src=gamedevlou.org.conf dest=/etc/apache2/sites-available/gamedevlou.org.conf owner=root group=root
+- name: Activate the gamedevlou.org site
+  when: apacheinstalled|success
+  file: src=/etc/apache2/sites-available/gamedevlou.org.conf dest=/etc/apache2/sites-enabled/gamedevlou.org.conf state=link
+  notify:
+  - Reload Apache
