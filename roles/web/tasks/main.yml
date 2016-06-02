@@ -9,8 +9,8 @@
   notify:
   - Start Apache
   register: apacheinstalled
-- name: Create Web Root
+- name: Disable default site
   when: apacheinstalled|success
-  file: dest=/var/www/louisvillemakesgames.org/htdocs mode=2775 state=directory owner=www-data group=www-data
+  file: dest=/etc/apache2/sites-enabled/000-default.conf state=absent
   notify:
-  - Reload Apahe
+  - Reload Apache

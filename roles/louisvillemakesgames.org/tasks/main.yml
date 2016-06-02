@@ -1,0 +1,15 @@
+---
+- name: Create Web Root
+  when: apacheinstalled|success
+  file: dest=/var/www/louisvillemakesgames.org/htdocs mode=2775 state=directory owner=www-data group=www-data
+  notify:
+  - Reload Apache
+- name: Add louisvillemakesgames.org config
+  when: apacheinstalled|success
+  register: apacheconfig
+  copy: src=louisvillemakesgames.org.conf dest=/etc/apache2/sites-available/louisvillemakesgames.org.conf owner=root group=root
+- name: Activate the louisvillemakesgames.org site
+  when: apacheinstalled|success
+  file: src=/etc/apache2/sites-available/louisvillemakesgames.org.conf dest=/etc/apache2/sites-enabled/louisvillemakesgames.org.conf state=link
+  notify:
+  - Reload Apache
