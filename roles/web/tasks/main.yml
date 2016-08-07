@@ -9,6 +9,11 @@
   notify:
   - Start Apache
   register: apacheinstalled
+- name: enable mod_rewrite
+  when: apacheinstalled|success
+  apache2_module: name=rewrite
+  notify:
+  - Reload Apache
 - name: Disable default site
   when: apacheinstalled|success
   file: dest=/etc/apache2/sites-enabled/000-default.conf state=absent
