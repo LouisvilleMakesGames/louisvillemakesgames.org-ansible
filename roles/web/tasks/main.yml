@@ -6,6 +6,7 @@
     - mysql-server
     - libapache2-mod-php7.0
     - php7.0-mysql
+    - nullmailer
   notify:
   - Start Apache
   register: apacheinstalled
@@ -19,3 +20,5 @@
   file: dest=/etc/apache2/sites-enabled/000-default.conf state=absent
   notify:
   - Reload Apache
+- name: Configure nullmailer
+  copy: src=remotes dest=/etc/nullmailer/remotes owner=root group=mail mode=0640
