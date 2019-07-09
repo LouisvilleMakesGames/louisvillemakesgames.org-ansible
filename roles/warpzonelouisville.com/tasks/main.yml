@@ -1,0 +1,15 @@
+---
+- name: Create Web Root
+  when: apacheinstalled|success
+  file: dest=/var/www/warpzonelouisville.com mode=775 state=directory owner=www-data group=www-data
+  notify:
+  - Reload Apache
+- name: Add warpzonelouisville.com config
+  when: apacheinstalled|success
+  register: apacheconfig
+  copy: src=warpzonelouisville.com.conf dest=/etc/apache2/sites-available/warpzonelouisville.com.conf owner=root group=root
+- name: Activate the warpzonelouisville.com site
+  when: apacheinstalled|success
+  file: src=/etc/apache2/sites-available/warpzonelouisville.com.conf dest=/etc/apache2/sites-enabled/warpzonelouisville.com.conf state=link
+  notify:
+  - Reload Apache
