@@ -11,5 +11,6 @@
     - web
     - louisvillemakesgames.org
     - gamedevlou.org
-  remote_user: root
+  remote_user: elathrop
+  become: true
   vars: []
